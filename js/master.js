@@ -25,24 +25,76 @@ function saveUser() {
         let users = JSON.parse(localStorage.getItem("userList"));
         users.push(user);
         localStorage.setItem("userList", JSON.stringify(users));
-      } else {
+    } else {
         const users = JSON.stringify([user]);
         localStorage.setItem("userList", users);
-      }
+    }
 }
 
 
 function printTable() {
-    let users = JSON.parse(localStorage.getItem("userList"));
-    tableBody.innerHTML = "";
-    users.forEach(person => {
-        tableBody.innerHTML += `<tr><td>${person.firstName}</td><td>${person.lastName}</td><td>${person.email}</td><td>${person.address}</td></tr>`;
-    });
-    table.style.display = "block";
+    if (localStorage.getItem("userList")) {
+        let users = JSON.parse(localStorage.getItem("userList"));
+        tableBody.innerHTML = "";
+        users.forEach(person => {
+            tableBody.innerHTML += `<tr><td>${person.firstName}</td><td>${person.lastName}</td><td>${person.email}</td><td>${person.address}</td></tr>`;
+        });
+        table.style.display = "block";
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No hay usuarios registrados',
+        });
+        }
 }
 
 
 function clearUsers() {
-    localStorage.removeItem("userList");
-    table.style.display = "none";
+    Swal.fire({
+        title: '¿Deseas eliminar los usuarios?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Aceptar',
+        denyButtonText: `Cancelar`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (localStorage.getItem("userList")) {
+                localStorage.removeItem("userList");
+                table.style.display = "none";
+                Swal.fire({
+                    title: '¡Listo!',
+                    text: 'Los usuarios han sido eliminados con éxito',
+                    icon: 'success',
+                });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'No hay usuarios registrados',
+            });
+        }}})
 }
+
+
+
+// Función sin cuadro de confirmación
+/*
+function clearUsers() {
+    if (localStorage.getItem("userList")) {
+        localStorage.removeItem("userList");
+        table.style.display = "none";
+        Swal.fire({
+            title: '¡Listo!',
+            text: 'Los usuarios han sido eliminados con éxito',
+            icon: 'success',
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No hay usuarios registrados',
+        });
+    }
+};
+*/
