@@ -58,6 +58,7 @@ function clearUsers() {
         confirmButtonText: 'Aceptar',
         denyButtonText: `Cancelar`,
     }).then((result) => {
+        //.then - Es un metodo de Js que se utiliza para manejar las promesas. Las promesas son objetos que representan un valor que puede estar disponible ahora, en el futuro o nunca.
         if (result.isConfirmed) {
             if (localStorage.getItem("userList")) {
                 localStorage.removeItem("userList");
