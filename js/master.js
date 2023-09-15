@@ -21,13 +21,15 @@ function saveUser() {
         email: email.value,
         address: address.value
     }
-    if (localStorage.getItem("userList")) {
-        let users = JSON.parse(localStorage.getItem("userList"));
-        users.push(user);
-        localStorage.setItem("userList", JSON.stringify(users));
-    } else {
-        const users = JSON.stringify([user]);
-        localStorage.setItem("userList", users);
+    if (validateFields() === true) {
+        if (localStorage.getItem("userList")) {
+            let users = JSON.parse(localStorage.getItem("userList"));
+            users.push(user);
+            localStorage.setItem("userList", JSON.stringify(users));
+        } else {
+            const users = JSON.stringify([user]);
+            localStorage.setItem("userList", users);
+        }
     }
 }
 
@@ -77,6 +79,35 @@ function clearUsers() {
         }}})
 }
 
+// Valida los campos de entrada para asegurarme de que no estén vacíos. Si algún campo está vacío, se muestra un mensaje de error con el campo que falta rellenar.
+function validateFields() {
+    let emptyDataMessage = "Falta completar los siguientes campos:";
+    if (firstName.value.trim() !== "" && lastName.value.trim() !== "" && email.value.trim() !== "" && address.value.trim() !== "") {
+        return true;
+    } else {
+        if (firstName.value.trim() === "") {
+            emptyDataMessage += " Nombre.";
+        }
+        
+        if (lastName.value.trim() === "") {
+            emptyDataMessage += " Apellido.";
+        }
+        
+        if (email.value.trim() === "") {
+            emptyDataMessage += " Email.";
+        }
+        
+        if (address.value.trim() === "") {
+            emptyDataMessage += " Dirección.";
+        }
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${emptyDataMessage}`,
+        });
+        return false;
+    }
+}
 
 
 // Función sin cuadro de confirmación
