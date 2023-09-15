@@ -14,7 +14,8 @@ btnPrintUsers.addEventListener("click", printTable);
 btnClearUsers.addEventListener("click", clearUsers);
 
 // Guarda un nuevo usuario en el almacenamiento local.
-function saveUser() {
+function saveUser(event) {
+    event.preventDefault(); // Evito que la pagina se recarge y no pueda mostrar mis alertas de exito.
     let user = {
         firstName: firstName.value,
         lastName: lastName.value,
@@ -26,9 +27,21 @@ function saveUser() {
             let users = JSON.parse(localStorage.getItem("userList"));
             users.push(user);
             localStorage.setItem("userList", JSON.stringify(users));
+            Swal.fire({
+                title: '¡Listo!',
+                text: 'El usuario ha sido registrado con éxito',
+                icon: 'success',
+            });
+            clearFields();
         } else {
             const users = JSON.stringify([user]);
             localStorage.setItem("userList", users);
+            Swal.fire({
+                title: '¡Listo!',
+                text: 'El usuario ha sido registrado con éxito',
+                icon: 'success',
+            });
+            clearFields();
         }
     }
 }
@@ -109,6 +122,13 @@ function validateFields() {
     }
 }
 
+// Elimina todo lo escrito en los campos de entrada.
+function clearFields() {
+    firstName.value = "";
+    lastName.value = "";
+    email.value = "";
+    address.value = "";
+}
 
 // Función sin cuadro de confirmación
 /*
