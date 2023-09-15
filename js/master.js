@@ -1,19 +1,19 @@
-const firstName = document.getElementById("nombre");
-const lastName = document.getElementById("apellido");
-const email = document.getElementById("correo");
-const address = document.getElementById("direccion");
-const btnRegister = document.getElementById("botonRegistrar");
-const tableBody = document.getElementById("cuerpoTabla");
-const btnPrintUsers = document.getElementById("botonImprimir");
-const table = document.getElementById("tabla");
-const btnClearUsers = document.getElementById("botonBorrar");
+const firstName = document.getElementById("nombre"); // Campo de entrada del nombre.
+const lastName = document.getElementById("apellido"); // Campo de entrada del apellido.
+const email = document.getElementById("correo"); // Campo de entrada del correo electrónico.
+const address = document.getElementById("direccion"); // Campo de entrada de la dirección.
+const btnRegister = document.getElementById("botonRegistrar"); // Botón de registro de usuario.
+const tableBody = document.getElementById("cuerpoTabla"); // Cuerpo de la tabla de usuarios.
+const btnPrintUsers = document.getElementById("botonImprimir"); // Botón para imprimir la tabla de usuarios.
+const table = document.getElementById("tabla"); // Tabla que muestra los usuarios.
+const btnClearUsers = document.getElementById("botonBorrar"); // Botón para borrar usuarios.
 
-
+// Agrego un evento "click" a los botones.
 btnRegister.addEventListener("click", saveUser);
 btnPrintUsers.addEventListener("click", printTable);
 btnClearUsers.addEventListener("click", clearUsers);
 
-
+// Guarda un nuevo usuario en el almacenamiento local.
 function saveUser() {
     let user = {
         firstName: firstName.value,
@@ -31,7 +31,7 @@ function saveUser() {
     }
 }
 
-
+// Actualiza la tabla HTML con la lista de usuarios almacenados en el local storage.
 function printTable() {
     if (localStorage.getItem("userList")) {
         let users = JSON.parse(localStorage.getItem("userList"));
@@ -49,7 +49,7 @@ function printTable() {
         }
 }
 
-
+// Elimina todos los usuarios almacenados en el local storage, si el usuario confirma.
 function clearUsers() {
     Swal.fire({
         title: '¿Deseas eliminar los usuarios?',
